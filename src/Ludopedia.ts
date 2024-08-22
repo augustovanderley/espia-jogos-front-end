@@ -1,8 +1,9 @@
 // src/Ludopedia.ts
 import axios, { AxiosResponse } from 'axios';
+import { Game } from './types';
 
 class Ludopedia {
-  private static baseUrl = 'https://ludopedia.com.br/api/v1';
+  private static baseUrl = '/api/colecao';
   private static apiToken = import.meta.env.VITE_LUDOPEDIA_ACCESS_TOKEN;
   static {
     console.log(this.apiToken);
@@ -13,7 +14,7 @@ class Ludopedia {
     'Accept': 'application/json',       // Accept JSON responses
   };
 
-  public static async requestCollection(idUsuario: string, nomeJogo: string): Promise<string[]> {
+  public static async requestCollection(idUsuario: string, nomeJogo: string): Promise<Game[]> {
     const endpoint = `${this.baseUrl}/colecao`;
     const params = {
       id_usuario: idUsuario,
@@ -35,7 +36,7 @@ class Ludopedia {
         return [];
       }
 
-      return response.data['colecao'] as string[];
+      return response.data['colecao'] as Game[];
     } catch (error) {
       console.error(`Error fetching data: ${error}`);
       return [];
