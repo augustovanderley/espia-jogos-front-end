@@ -12,18 +12,19 @@ const GameCollection: React.FC<GameCollectionProps> = ({ games, loading, error }
   if (error) return <p>{error}</p>;
 
   return (
-    <ul className="list-group">
+    <div className="row">
       {games.map((game) => (
-        <li key={game.id_jogo} className="list-group-item d-flex justify-content-between align-items-center">
-          <div className="ms-2 me-auto">
-            <div className="fw-bold">{game.nm_jogo}</div>
-            <img src={game.thumb} alt={game.nm_jogo} className="img-thumbnail" />
-            <p>Rating: {game.vl_nota}</p>
-          </div>
-          <a href={game.link} className="btn btn-primary">More details</a>
-        </li>
+        <div key={game.id_jogo} className="col-md-4 mb-4">
+          <a href={game.link} className="card h-100 text-decoration-none text-dark">
+            <img src={game.thumb} alt={game.nm_jogo} className="card-img-top" />
+            <div className="card-body">
+              <h5 className="card-title">{game.nm_jogo}</h5>
+              <p className="card-text">Rating: {game.vl_nota}</p>
+            </div>
+          </a>
+        </div>
       ))}
-    </ul>
+    </div>
   );
 };
 
