@@ -5,9 +5,6 @@ import { Game } from './types';
 class Ludopedia {
   private static baseUrl = '/api/colecao';
   private static apiToken = import.meta.env.VITE_LUDOPEDIA_ACCESS_TOKEN;
-  static {
-    console.log(this.apiToken);
-  }
   private static headers = {
     Authorization: `Bearer ${this.apiToken}`,
     'Content-Type': 'application/json', // Add any other headers you might need
