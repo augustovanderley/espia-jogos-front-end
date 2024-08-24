@@ -1,6 +1,6 @@
 import React from 'react';
 import { Game } from '../types';
-import GameCollection from './GameCollection';
+import { GameCollection } from './GameCollection';
 
 interface User {
   id_usuario: string;
