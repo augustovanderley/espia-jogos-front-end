@@ -75,8 +75,13 @@ const App: React.FC = () => {
   return (
     <div className="game-collection-container">
       <div className="container">
-        <h1 className="mb-4">Game Collection</h1>
-        <InputForm inputValue={inputValue} onInputChange={handleInputChange} onButtonClick={handleButtonClick} />
+        <h1 className="mb-4">Espia Jogos</h1>
+        <InputForm 
+          inputValue={inputValue} 
+          onInputChange={handleInputChange} 
+          onButtonClick={handleButtonClick} 
+          loading={loading} 
+        />
         {userCollections
           .filter(({ games }) => games.length > 0)
           .map(({ user, games, isVisible }) => (
