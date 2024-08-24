@@ -1,32 +1,21 @@
-# React + TypeScript + Vite
+# Espia jogo em front end
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+100% independente do backend.
 
-Currently, two official plugins are available:
+## Instruções
+- Criar o arquivo `meus_amigos.json` na pasta `/public`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Criar o arquivo `.env` com o seguinte conteúdo: 
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```
+VITE_LUDOPEDIA_ACCESS_TOKEN=<seu_token>
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Dependências
 
+- Instalar Node.js v20.17.0
+- Executar npm install 
 
+## Como executar
+
+Rode o comando `npm run dev` para subir um projeto em localhost
