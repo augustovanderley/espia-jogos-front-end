@@ -1,6 +1,6 @@
 import React from 'react';
 import { Game } from '../types';
-import './GameCollection.css'; // Import the CSS file
+import '../styles/GameCollection.css'; // Import the CSS file
 
 interface GameCollectionProps {
   games: Game[];

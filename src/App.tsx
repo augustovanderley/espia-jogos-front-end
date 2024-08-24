@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 import InputForm from './components/InputForm.tsx';
 import UserListCard from './components/UserListCard.tsx';
 import Ludopedia from './Ludopedia';
@@ -70,24 +71,27 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="container mt-4">
-      <h1 className="mb-4">Game Collection</h1>
-      <InputForm inputValue={inputValue} onInputChange={handleInputChange} onButtonClick={handleButtonClick} />
-      {userCollections
-        .filter(({ games }) => games.length > 0)
-        .map(({ user, games, isVisible }) => (
-          <UserListCard
-            key={user.id_usuario}
-            user={user}
-            games={games}
-            isVisible={isVisible}
-            toggleVisibility={toggleVisibility}
-            loading={loading}
-            error={error}
-          />
-        ))}
+    <div className="game-collection-container">
+      <div className="container">
+        <h1 className="mb-4">Game Collection</h1>
+        <InputForm inputValue={inputValue} onInputChange={handleInputChange} onButtonClick={handleButtonClick} />
+        {userCollections
+          .filter(({ games }) => games.length > 0)
+          .map(({ user, games, isVisible }) => (
+            <UserListCard
+              key={user.id_usuario}
+              user={user}
+              games={games}
+              isVisible={isVisible}
+              toggleVisibility={toggleVisibility}
+              loading={loading}
+              error={error}
+            />
+          ))}
+      </div>
     </div>
   );
+  
 };
 
 export default App;
