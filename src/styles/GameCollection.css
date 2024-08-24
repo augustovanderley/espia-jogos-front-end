@@ -1,7 +1,8 @@
-.game-thumbnail
-{
-	display:block;
-	margin:auto;
-	max-width: 150px;
-	max-height : 150px;
-}
+.game-thumbnail {
+	width: 100%;
+	height: auto;
+	max-width: 100%;
+	object-fit: cover; /* or contain, depending on the desired behavior */
+	border-radius: 8px; /* Optional: To match the card's rounded corners */
+  }
+  
