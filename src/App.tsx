@@ -48,12 +48,14 @@ const App: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const updatedCollections: UserCollection[] = [];
       for (const userCollection of userCollections) {
         const collection = await Ludopedia.requestCollection(userCollection.user.id_usuario, inputValue);
-        updatedCollections.push({ ...userCollection, games: collection });
+        setUserCollections(prevCollections => prevCollections.map(uc =>
+          uc.user.id_usuario === userCollection.user.id_usuario
+            ? { ...uc, games: collection }
+            : uc
+        ));
       }
-      setUserCollections(updatedCollections);
     } catch (err) {
       console.error("Error fetching collections:", err);
       setError("Failed to load game collections.");
