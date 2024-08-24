@@ -14,6 +14,7 @@ interface User {
 interface UserCollection {
   user: User;
   games: Game[];
+  isVisible: boolean; // Add visibility state for each user
 }
 
 const App: React.FC = () => {
@@ -27,8 +28,7 @@ const App: React.FC = () => {
       try {
         const response = await fetch('meus_amigos.json');
         const data: User[] = await response.json();
-        console.log(data)
-        setUserCollections(data.map(user => ({ user, games: [] })));
+        setUserCollections(data.map(user => ({ user, games: [], isVisible: false })));
       } catch (err) {
         console.error("Error fetching user IDs:", err);
         setError("Failed to load user IDs.");
@@ -49,7 +49,7 @@ const App: React.FC = () => {
       const updatedCollections: UserCollection[] = [];
       for (const userCollection of userCollections) {
         const collection = await Ludopedia.requestCollection(userCollection.user.id_usuario, inputValue);
-        updatedCollections.push({ user: userCollection.user, games: collection });
+        updatedCollections.push({ ...userCollection, games: collection });
       }
       setUserCollections(updatedCollections);
     } catch (err) {
@@ -60,9 +60,17 @@ const App: React.FC = () => {
     }
   };
 
+  const toggleVisibility = (userId: string) => {
+    setUserCollections(userCollections.map(userCollection =>
+      userCollection.user.id_usuario === userId
+        ? { ...userCollection, isVisible: !userCollection.isVisible }
+        : userCollection
+    ));
+  };
+
   return (
-    <div>
-      <h1>Game Collection</h1>
+    <div className="container mt-4">
+      <h1 className="mb-4">Game Collection</h1>
       <div className="mb-3">
         <input
           type="text"
@@ -75,12 +83,28 @@ const App: React.FC = () => {
           Send Request
         </button>
       </div>
-      {userCollections.map(({ user, games }) => (
-        <div key={user.id_usuario}>
-          <h2>{user.nome_legivel}</h2>
-          <GameCollection games={games} loading={loading} error={error} />
-        </div>
-      ))}
+      {userCollections
+        .filter(({ games }) => games.length > 0) // Filter out users with empty collections
+        .map(({ user, games, isVisible }) => (
+          <div key={user.id_usuario} className="card mb-4" onClick={() => toggleVisibility(user.id_usuario)} style={{ cursor: 'pointer' }}>
+            <div className="card-header d-flex align-items-center">
+              <img src={user.thumb} alt={user.nome_legivel} className="rounded-circle me-3" style={{ width: '50px', height: '50px' }} />
+              <h2 className="h5 mb-0">{user.nome_legivel}</h2>
+              {!isVisible && (
+                <div className="d-flex flex-wrap ms-3">
+                  {games.slice(0, 5).map((game, index) => (
+                    <img key={index} src={game.thumb} alt={game.nm_jogo} className="rounded-circle me-2" style={{ width: '30px', height: '30px' }} />
+                  ))}
+                  {games.length > 5 && <span className="ms-2">+{games.length - 5} more</span>}
+                </div>
+              )}
+              <span className="ms-auto">{isVisible ? '▲' : '▼'}</span>
+            </div>
+            <div className={`card-body ${isVisible ? '' : 'd-none'}`}>
+              <GameCollection games={games} loading={loading} error={error} />
+            </div>
+          </div>
+        ))}
     </div>
   );
 };
