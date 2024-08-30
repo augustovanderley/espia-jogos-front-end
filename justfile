@@ -23,4 +23,5 @@ deploy:
   ngrok http --domain=$MY_DOMAIN 5174 \
   --oauth google \
   --oauth-allow-email $EMAIL1 \
-  --oauth-allow-email $EMAIL2
+  --oauth-allow-email $EMAIL2 \
+  --oauth-allow-email $EMAIL3

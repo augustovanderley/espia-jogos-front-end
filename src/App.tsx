@@ -22,6 +22,7 @@ interface UserCollection {
 const App: React.FC = () => {
   const [inputValue, setInputValue] = useState(''); 
   const [userCollections, setUserCollections] = useState<UserCollection[]>([]);
+  const [showUserList, setShowUserList] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -72,9 +73,29 @@ const App: React.FC = () => {
     ));
   };
 
+  const toggleUserListVisibility = () => {
+    setShowUserList(!showUserList);
+  };
+
   return (
     <div className="game-collection-container">
       <div className="container">
+        <button 
+          className="btn btn-primary mb-3" 
+          onClick={toggleUserListVisibility}
+        >
+          {showUserList ? 'Esconder lista de usuários' : 'Mostrar lista de usuários'}
+        </button>
+        {showUserList && (
+          <ul className="list-group mb-3">
+            {userCollections.map(({ user }) => (
+              <li key={user.id_usuario} className="list-group-item">
+                <img src={user.thumb} alt={user.nome_legivel} className="mr-2" />
+                {user.nome_legivel} ({user.usuario})
+              </li>
+            ))}
+          </ul>
+        )}
         <h1 className="mb-4">Espia Jogos</h1>
         <InputForm 
           inputValue={inputValue} 
@@ -82,6 +103,7 @@ const App: React.FC = () => {
           onButtonClick={handleButtonClick} 
           loading={loading} 
         />
+
         {userCollections
           .filter(({ games }) => games.length > 0)
           .map(({ user, games, isVisible }) => (
