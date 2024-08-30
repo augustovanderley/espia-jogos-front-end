@@ -28,7 +28,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const fetchUserIds = async () => {
       try {
-        const response = await fetch('public/meus_amigos.json');
+        const response = await fetch('meus_amigos.json');
         const data: User[] = await response.json();
         setUserCollections(data.map(user => ({ user, games: [], isVisible: false })));
       } catch (err) {
