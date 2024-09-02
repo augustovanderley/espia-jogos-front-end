@@ -1,5 +1,7 @@
 // components/UserListToggle.tsx
 import React, { FC } from 'react';
+import { Button, List, ListItem, ListItemText, Avatar, IconButton } from '@mui/material';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 interface User {
   id_usuario: string;
@@ -18,21 +20,23 @@ interface UserListToggleProps {
 const UserListToggle: FC<UserListToggleProps> = ({ showUserList, toggleUserListVisibility, userCollections }) => {
   return (
     <div>
-      <button 
-        className="btn btn-primary mb-3" 
+      <Button 
+        variant="contained" 
+        color="primary" 
         onClick={toggleUserListVisibility}
+        endIcon={showUserList ? <ExpandLess /> : <ExpandMore />}
       >
         {showUserList ? 'Esconder lista de usuários' : 'Mostrar lista de usuários'}
-      </button>
+      </Button>
       {showUserList && (
-        <ul className="list-group mb-3">
+        <List className="mb-3">
           {userCollections.map(({ user }) => (
-            <li key={user.id_usuario} className="list-group-item">
-              <img src={user.thumb} alt={user.nome_legivel} className="mr-2" />
-              {user.nome_legivel} ({user.usuario})
-            </li>
+            <ListItem key={user.id_usuario}>
+              <Avatar alt={user.nome_legivel} src={user.thumb} />
+              <ListItemText primary={user.nome_legivel} secondary={user.usuario} />
+            </ListItem>
           ))}
-        </ul>
+        </List>
       )}
     </div>
   );

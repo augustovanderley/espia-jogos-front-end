@@ -11,6 +11,10 @@
     "generate-pwa-assets": "pwa-assets-generator --preset minimal public/espia_jogos.svg"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^6.0.1",
+    "@mui/material": "^6.0.1",
     "axios": "^1.7.4",
     "bootstrap": "^5.3.3",
     "dotenv": "^16.4.5",
