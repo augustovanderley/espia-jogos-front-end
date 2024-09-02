@@ -1,6 +1,5 @@
-// components/UserListToggle.tsx
 import React, { FC } from 'react';
-import { Button, List, ListItem, ListItemText, Avatar, IconButton } from '@mui/material';
+import { Button, List, ListItem, ListItemText, Avatar, Checkbox } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 interface User {
@@ -15,9 +14,21 @@ interface UserListToggleProps {
   showUserList: boolean;
   toggleUserListVisibility: () => void;
   userCollections: { user: User; games: any[]; isVisible: boolean }[];
+  selectedUsers: Set<string>;
+  onSelectUser: (userId: string) => void;
+  selectAllUsers: () => void;
+  deselectAllUsers: () => void;
 }
 
-const UserListToggle: FC<UserListToggleProps> = ({ showUserList, toggleUserListVisibility, userCollections }) => {
+const UserListToggle: FC<UserListToggleProps> = ({
+  showUserList,
+  toggleUserListVisibility,
+  userCollections,
+  selectedUsers,
+  onSelectUser,
+  selectAllUsers,
+  deselectAllUsers,
+}) => {
   return (
     <div>
       <Button 
@@ -29,14 +40,28 @@ const UserListToggle: FC<UserListToggleProps> = ({ showUserList, toggleUserListV
         {showUserList ? 'Esconder lista de usuários' : 'Mostrar lista de usuários'}
       </Button>
       {showUserList && (
-        <List className="mb-3">
-          {userCollections.map(({ user }) => (
-            <ListItem key={user.id_usuario}>
-              <Avatar alt={user.nome_legivel} src={user.thumb} />
-              <ListItemText primary={user.nome_legivel} secondary={user.usuario} />
-            </ListItem>
-          ))}
-        </List>
+        <>
+          <div className="select-buttons">
+            <Button variant="outlined" onClick={selectAllUsers} className="mr-2">
+              Selecionar Todos
+            </Button>
+            <Button variant="outlined" onClick={deselectAllUsers}>
+              Desmarcar Todos
+            </Button>
+          </div>
+          <List className="mb-3">
+            {userCollections.map(({ user }) => (
+              <ListItem key={user.id_usuario}>
+                <Checkbox
+                  checked={selectedUsers.has(user.id_usuario)}
+                  onChange={() => onSelectUser(user.id_usuario)}
+                />
+                <Avatar alt={user.nome_legivel} src={user.thumb} />
+                <ListItemText primary={user.nome_legivel} secondary={user.usuario} />
+              </ListItem>
+            ))}
+          </List>
+        </>
       )}
     </div>
   );
