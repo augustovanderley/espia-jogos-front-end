@@ -11,6 +11,7 @@ interface User {
   usuario: string;
   nome_legivel: string;
   thumb: string;
+  priority_search: boolean;
 }
 
 interface UserCollection {
@@ -31,13 +32,14 @@ const App: React.FC = () => {
       try {
         const response = await fetch('meus_amigos.json');
         const data: User[] = await response.json();
-        setUserCollections(data.map(user => ({ user, games: [], isVisible: false })));
+        const lista_rapida = data.filter(user => user.priority_search);
+        setUserCollections(lista_rapida.map(user => ({ user, games: [], isVisible: false })));
       } catch (err) {
         console.error("Error fetching user IDs:", err);
         setError("Failed to load user IDs.");
       }
     };
-
+  
     fetchUserIds();
   }, []);
 
