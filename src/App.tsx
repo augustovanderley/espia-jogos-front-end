@@ -4,6 +4,7 @@ import './App.css';
 import InputForm from './components/InputForm.tsx';
 import UserListCard from './components/UserListCard.tsx';
 import Ludopedia from './Ludopedia';
+import UserListToggle from './components/UserListToggle.tsx'; // Import the new component
 import { Game } from './types';
 
 interface User {
@@ -82,22 +83,11 @@ const App: React.FC = () => {
   return (
     <div className="game-collection-container">
       <div className="container">
-        <button 
-          className="btn btn-primary mb-3" 
-          onClick={toggleUserListVisibility}
-        >
-          {showUserList ? 'Esconder lista de usuários' : 'Mostrar lista de usuários'}
-        </button>
-        {showUserList && (
-          <ul className="list-group mb-3">
-            {userCollections.map(({ user }) => (
-              <li key={user.id_usuario} className="list-group-item">
-                <img src={user.thumb} alt={user.nome_legivel} className="mr-2" />
-                {user.nome_legivel} ({user.usuario})
-              </li>
-            ))}
-          </ul>
-        )}
+        <UserListToggle 
+          showUserList={showUserList} 
+          toggleUserListVisibility={toggleUserListVisibility} 
+          userCollections={userCollections} 
+        />
         <h1 className="mb-4">Espia Jogos</h1>
         <InputForm 
           inputValue={inputValue} 
@@ -105,7 +95,6 @@ const App: React.FC = () => {
           onButtonClick={handleButtonClick} 
           loading={loading} 
         />
-
         {userCollections
           .filter(({ games }) => games.length > 0)
           .map(({ user, games, isVisible }) => (
@@ -122,7 +111,6 @@ const App: React.FC = () => {
       </div>
     </div>
   );
-  
 };
 
 export default App;
