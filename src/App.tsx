@@ -52,6 +52,15 @@ const App: React.FC = () => {
   const handleButtonClick = async () => {
     setLoading(true);
     setError(null);
+  
+    // Clear the existing results by resetting the games array for each user
+    setUserCollections(prevCollections => 
+      prevCollections.map(userCollection => ({
+        ...userCollection,
+        games: []
+      }))
+    );
+  
     try {
       for (const userCollection of userCollections) {
         if (selectedUsers.has(userCollection.user.id_usuario)) {
@@ -70,6 +79,7 @@ const App: React.FC = () => {
       setLoading(false);
     }
   };
+  
 
   const toggleVisibility = (userId: string) => {
     setUserCollections(userCollections.map(userCollection =>
