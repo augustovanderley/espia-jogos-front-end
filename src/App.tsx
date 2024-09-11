@@ -123,6 +123,17 @@ const App: React.FC = () => {
           onButtonClick={handleButtonClick} 
           loading={loading} 
         />
+  
+        {/* Check if there are no results after filtering */}
+        {userCollections
+          .filter(({ user }) => selectedUsers.has(user.id_usuario))
+          .filter(({ games }) => games.length > 0).length === 0 && !loading && (
+            <div className="no-results-message">
+              <p>No results found.</p>
+            </div>
+        )}
+  
+        {/* Display the user collections if there are results */}
         {userCollections
           .filter(({ user }) => selectedUsers.has(user.id_usuario))
           .filter(({ games }) => games.length > 0)
