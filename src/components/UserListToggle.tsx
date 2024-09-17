@@ -36,19 +36,29 @@ const UserListToggle: FC<UserListToggleProps> = ({
         color="primary" 
         onClick={toggleUserListVisibility}
         endIcon={showUserList ? <ExpandLess /> : <ExpandMore />}
+        sx={{ textTransform: 'none' }}
       >
-        {showUserList ? 'Esconder lista de usuários' : 'Mostrar lista de usuários'}
+        {showUserList ? 'Esconder lista de colecionadores' : 'Mostrar lista de colecionadores'}
       </Button>
       {showUserList && (
         <>
-          <div className="select-buttons">
-            <Button variant="outlined" onClick={selectAllUsers} className="mr-2">
-              Selecionar Todos
-            </Button>
-            <Button variant="outlined" onClick={deselectAllUsers}>
-              Desmarcar Todos
-            </Button>
-          </div>
+      <div className="select-buttons">
+        <Button
+          variant="outlined"
+          onClick={selectAllUsers}
+          className="mr-2"
+          sx={{ textTransform: 'none' }}
+        >
+          Selecionar Todos
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={deselectAllUsers}
+          sx={{ textTransform: 'none' }}
+        >
+          Desmarcar Todos
+        </Button>
+      </div>
           <List className="mb-3">
             {userCollections.map(({ user }) => (
               <ListItem key={user.id_usuario}>
